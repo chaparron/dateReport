@@ -1,41 +1,35 @@
 import java.time.Instant
-import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
-private const val PATTERN_FORMAT = "yyyyMMdd"
-
+//private const val PATTERN_FORMAT = "yyyyMMdd"
 fun main() {
     val instant: Instant = Instant.parse("2022-10-05T19:15:30.00Z")
     print(instant.reportDay())
 }
-
 private fun Instant.reportDay(): String {
-    val localDateTime = LocalDateTime.ofInstant(this, ZoneOffset.UTC)
-    return localDateTime.workingDate().isHoliday().formatDate()
+    return this.toWorkingDate().formatDate()
 }
-
-private fun LocalDateTime.workingDate(): LocalDateTime {
-    return if (this.hour < 18) this else this.plusDays(1)
+private fun Instant.toWorkingDate(): Instant {
+    var instant = this
+    if (this.atZone(ZoneOffset.UTC).hour > 17)  instant = instant.plusSeconds(86400)
+    while (instant.isWorkingDay()) {
+        instant = instant.plusSeconds(86400)
+    }
+    return instant
 }
-
-private fun LocalDateTime.isHoliday(): LocalDateTime {
+private fun Instant.isWorkingDay(): Boolean {
     val holidays = listOf(
         "2022-10-01",
-        "2022-10-02",
         "2022-10-06",
         "2022-10-07",
-        "2022-10-08",
-        "2022-10-11"
+        "2022-10-08"
     )
-    var counter = 0L
-    while (true) {
-        if ((this.toLocalDate().plusDays(counter).toString()) in holidays) counter++ else break
-    }
-    return this.plusDays(counter)
+    return this.toString().split("T")[0] in holidays
 }
-
-private fun LocalDateTime.formatDate():String {
-    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(PATTERN_FORMAT)
-    return this.format(formatter)
+private fun Instant.formatDate():String {
+    val (year, month, day) = this.toString().split("T")[0].split("-")
+    return("$year$month$day")
+//    val localDateTime = LocalDateTime.ofInstant(this, ZoneOffset.UTC)
+//    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(PATTERN_FORMAT)
+//    return localDateTime.format(formatter)
 }
