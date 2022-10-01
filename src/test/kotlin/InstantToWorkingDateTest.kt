@@ -1,3 +1,4 @@
+import `interface`.Holiday
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -9,6 +10,8 @@ import java.time.Instant
 @ExtendWith(MockitoExtension::class)
 class InstantToWorkingDateTest {
 
+//    @Mock
+//    private lateinit var holiday: Holiday
 
     @Test
     fun `should return String length of 8 chars convertible to Int with a valid instant`() {
