@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ReportDayServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-10-02T07:35:02" hostname="BIGLAPTOP" time="0.655">
+  <properties/>
+  <testcase name="Should return the same using reportDayFromPeriods than reportDay()" classname="ReportDayServiceTest" time="0.655"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
