@@ -6,7 +6,7 @@ import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import reposistory.HolidayRespository
+import reposistory.HolidayRepository
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit
 internal class ReportDayServiceTest{
 
     @Mock
-    private lateinit var holidayRepository: HolidayRespository
+    private lateinit var holidayRepository: HolidayRepository
     @InjectMocks
     private lateinit var sut: ReportDayService
 

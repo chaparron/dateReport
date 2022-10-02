@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ReportDayServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-10-02T07:35:02" hostname="BIGLAPTOP" time="0.655">
+<testsuite name="ReportDayServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-10-02T19:02:23" hostname="BIGLAPTOP" time="1.081">
   <properties/>
-  <testcase name="Should return the same using reportDayFromPeriods than reportDay()" classname="ReportDayServiceTest" time="0.655"/>
+  <testcase name="should should return next day giving a working day at 19hrs()" classname="ReportDayServiceTest" time="1.027"/>
+  <testcase name="Should return the same using reportDayFromPeriods than reportDay()" classname="ReportDayServiceTest" time="0.005"/>
+  <testcase name="should should return 3 days later giving a working day at 19hrs followed by 2 holidays()" classname="ReportDayServiceTest" time="0.007"/>
+  <testcase name="should should return the same day giving a working day at 10hrs()" classname="ReportDayServiceTest" time="0.003"/>
+  <testcase name="should return String length of 8 chars convertible to Int with a valid instant()" classname="ReportDayServiceTest" time="0.034"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

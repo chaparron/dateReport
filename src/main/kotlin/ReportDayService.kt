@@ -1,11 +1,17 @@
-import reposistory.HolidayRespository
+import reposistory.HolidayRepository
 import java.time.Instant
+import java.time.LocalDateTime
 import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 class ReportDayService (
-    private val HolidayRespository: HolidayRespository
+    private val holidayRepository: HolidayRepository
     ) {
+    companion object{
+        private const val PATTERN_FORMAT = "yyyyMMdd"
+//        private val zoneId = ZoneId.of("Asia/Yerevan")
+    }
     fun reportDayFromPeriods(year:Int, month:Int, day:Int, hour:Int, min:Int = 0, sec: Int = 0): String {
         val formatYear = String.format("%04d", year)
         val formatMonth = String.format("%02d", month)
@@ -17,21 +23,25 @@ class ReportDayService (
         return reportDay(instant)
     }
     fun reportDay(instant: Instant): String {
-        return instant.toWorkingDate().formatDate()
+        return instant.workingDate().formatDate()
     }
-    private fun Instant.toWorkingDate(): Instant {
+    private fun Instant.workingDate(): Instant {
         return if (this.getInstantHour() > 17)
-            HolidayRespository.findWorkingDay(this.plusOneDay())
-        else HolidayRespository.findWorkingDay(this)
+            holidayRepository.findWorkingDay(this.plusOneDay())
+        else holidayRepository.findWorkingDay(this)
     }
     private fun Instant.formatDate():String {
-        val (year, month, day) = this.toString().split("T")[0].split("-")
-        return("$year$month$day")
+        val localDateTime = LocalDateTime.ofInstant(this, ZoneOffset.UTC)
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(PATTERN_FORMAT)
+        return localDateTime.format(formatter)
+//        val (year, month, day) = this.toString().split("T")[0].split("-")
+//        return("$year$month$day")
     }
     private fun Instant.plusOneDay(): Instant {
         return this.plus(1, ChronoUnit.DAYS)
     }
     private fun Instant.getInstantHour(): Int {
-        return(this.toString().split("T")[1].split(":")[0].toInt())
+        return LocalDateTime.ofInstant(this, ZoneOffset.UTC).hour
+        // return(this.toString().split("T")[1].split(":")[0].toInt())
     }
 }

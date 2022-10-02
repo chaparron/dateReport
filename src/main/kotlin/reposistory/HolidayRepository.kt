@@ -2,6 +2,6 @@ package reposistory
 
 import java.time.Instant
 
-interface HolidayRespository {
+interface HolidayRepository {
     fun findWorkingDay(instant: Instant): Instant
 }
